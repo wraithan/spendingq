@@ -1,3 +1,4 @@
 Django==1.4.2
 dj-database-url==0.2.1
-django-browserid
+django-browserid==0.6
+djang-tastypie==0.9.11

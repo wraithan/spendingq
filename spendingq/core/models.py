@@ -18,7 +18,7 @@ class Profile(models.Model):
 class DataPoint(models.Model):
     collection_rate = models.PositiveIntegerField()
     average_unspent = models.PositiveIntegerField()
-    owner = models.ForeignKey('core.Profile')
+    owner = models.ForeignKey('core.Profile', related_name='data_points')
 
     @property
     def sq(self):
