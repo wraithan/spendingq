@@ -13,10 +13,10 @@
 </div>
 <div class="row data">
   <div class="span4 well form">
-    <form id="inputForm" action="#" data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}">
+    <form id="inputForm" action="#" data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}" data-profile-url="{% url 'api_dispatch_list' api_name='api' resource_name='profile' %}">
       <label>Average Unspent<input type="text" name="unspent"></label>
       <label>Collection Rate<input type="text" name="rate"></label>
-      <button id="submit">Submit</button>
+      <button class="btn" type="button" id="submit">Submit</button>
     </form>
   </div>
   <div class="span7 well graph">
