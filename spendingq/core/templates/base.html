@@ -1,20 +1,40 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css" type="text/css" media="screen" />
+    <script src="{{STATIC_URL}}js/polyfill.js" type="text/javascript"></script>
     {{ browserid_form.media }}
+    {% block head %}
+    {% endblock head %}
   </head>
   <body>
-    {% if not user.is_authenticated %}
-    <a id="browserid" href="#">Sign In</a>
-    <form method="POST" action="{% url browserid_verify %}">
-      {% csrf_token %}
-      {{ browserid_form.as_p }}
-    </form>
-    {% else %}
-    <p>Hi, <a href="{% url profile pk=user.profile.id %}">{{ user.email }}</a></p>
-    {% endif %}
-    <div class="content">
+    <div class="container">
+      <h2><a href="{% url home %}">SpendingQ</a></h2>
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav">
+              <li><a href="#">About</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li>
+                {% if not user.is_authenticated %}
+                <a id="browserid" href="#">Sign In</a>
+                <div style="display:none">
+                  <form method="POST" action="{% url browserid_verify %}">
+                    {% csrf_token %}
+                    {{ browserid_form.as_p }}
+                  </form>
+                </div>
+                {% else %}
+                <a href="{% url profile pk=user.profile.id %}">Profile</a>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
       {% block content %}
       {% endblock content %}
     </div>
