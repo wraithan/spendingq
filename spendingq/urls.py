@@ -24,6 +24,9 @@ urlpatterns = patterns(
         include(admin.site.urls)),
     url(r'^browserid/',
         include('django_browserid.urls')),
+    url(r'graph/(?P<username>[\w.@+-]+)$',
+        GraphView.as_view(),
+        name='graph')
     url(r'^',
         include(api.urls)),
 )
