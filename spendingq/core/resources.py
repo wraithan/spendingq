@@ -3,7 +3,7 @@ from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
 from tastypie.fields import ToManyField, IntegerField
 
-from .auth import DjangoAuthentication, ProfileAuthorization
+from .auth import ProfileAuthorization
 from .models import DataPoint, Profile
 
 
