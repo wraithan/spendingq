@@ -20,7 +20,7 @@ var handleSubmit = function() {
 var graphUpdate = function() {
     var graphData = []
     var i = 0
-    $.get($('#inputForm').data('profileUrl'), {format: 'json'},
+    $.get($('#content').data('profileUrl'), {format: 'json'},
           function(data) {
               data.data_points.sort(function(a, b) {
                   return a.id - b.id
@@ -33,6 +33,9 @@ var graphUpdate = function() {
 }
 
 $(function() {
-    document.getElementById('submit').addEventListener('click', handleSubmit)
+    var submit = document.getElementById('submit')
+    if (submit) {
+        submit.addEventListener('click', handleSubmit)
+    }
     graphUpdate()
 })

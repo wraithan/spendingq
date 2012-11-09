@@ -7,12 +7,24 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+def detail_url(resource, pk):
+    return reverse('api_dispatch_detail', kwargs={'api_name': 'api',
+                                                  'resource_name': resource,
+                                                  'pk': pk})
+
+
 class Profile(models.Model):
     public = models.BooleanField(default=False)
     user = models.OneToOneField('auth.User')
 
     def get_absolute_url(self):
-        return reverse('profile',)
+        return reverse('profile')
+
+    def get_api_detail_url(self):
+        return detail_url('profile', self.pk)
+
+    def get_graph_url(self):
+        return reverse('graph', kwargs={'username': self.user.username})
 
 
 class DataPoint(models.Model):

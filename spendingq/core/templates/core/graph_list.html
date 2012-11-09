@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for profile in object_list %}
+{% if forloop.first %}
+<div class="row">
+  <div class="span3 well">
+    <ul class="unstyled">
+{% endif %}
+      <li><a href="{{ profile.get_graph_url }}">{{ profile.user.username }}</a></li>
+{% if forloop.last %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock content %}

@@ -1,8 +1,9 @@
+from tastypie.authentication import Authentication
 from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
 from tastypie.fields import ToManyField, IntegerField
 
-from .auth import DjangoAuthentication
+from .auth import DjangoAuthentication, ProfileAuthorization
 from .models import DataPoint, Profile
 
 
@@ -11,8 +12,9 @@ class ProfileResource(ModelResource):
                               'data_points', full=True)
 
     class Meta:
-        authentication = DjangoAuthentication()
-        authorization = Authorization()
+        allowed_methods = ('get',)
+        authentication = Authentication()
+        authorization = ProfileAuthorization()
         queryset = Profile.objects.all()
         resource_name = 'profile'
 
@@ -21,10 +23,11 @@ class DataPointResource(ModelResource):
     spending_quotient = IntegerField(attribute='sq', readonly=True)
 
     class Meta:
-        authentication = DjangoAuthentication()
+        authentication = Authentication()
         authorization = Authorization()
         queryset = DataPoint.objects.all()
         resource_name = 'datapoint'
+        exclude = ('owner',)
 
     def obj_create(self, bundle, request=None, **kwargs):
         user_id = request.user.id
