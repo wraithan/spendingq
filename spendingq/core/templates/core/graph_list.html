@@ -7,7 +7,7 @@
   <div class="span3 well">
     <ul class="unstyled">
 {% endif %}
-      <li><a href="{{ profile.get_graph_url }}">{{ profile.user.username }}</a></li>
+      <a href="{{ profile.get_graph_url }}"><li>{{ profile.user.username }}</li></a>
 {% if forloop.last %}
     </ul>
   </div>

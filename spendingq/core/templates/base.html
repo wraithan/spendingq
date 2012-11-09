@@ -4,6 +4,7 @@
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{STATIC_URL}}css/base.css" type="text/css" media="screen" />
     {{ browserid_form.media }}
     {% block head %}
     {% endblock head %}
@@ -44,6 +45,9 @@
       </div>
       {% block content %}
       {% endblock content %}
+      <footer class="footer">
+        <div><a href="{% url 'home' %}">SpeningQ</a> is an <a href="https://github.com/wraithan/spendingq/">open source</a> project by <a href="http://blog.wraithan.net/">Wraithan</a>.</div>
+      </footer>
     </div>
   </body>
 <html>
