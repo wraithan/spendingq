@@ -28,7 +28,7 @@ var graphUpdate = function() {
               }).forEach(function(element) {
                   graphData.push([++i, element.spending_quotient])
               })
-              $.plot($("#graph"), [graphData])
+              $.plot($("#graph"), [graphData], {yaxis: {min:0}})
           }
          )
 }
