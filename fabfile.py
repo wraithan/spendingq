@@ -10,5 +10,5 @@ s3 = {
 @task
 def deploy():
     local('git push heroku')
-    local('./manage.py static --noinput')
-    local('s3sync.rb -r --progress collectedstatic/ %(bucket)s:%(key)s' % s3)
+    local('./manage.py collectstatic --noinput')
+    local('s3sync.rb -r --progress static/ %(bucket)s:%(key)s' % s3)
