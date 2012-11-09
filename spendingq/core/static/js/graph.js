@@ -15,6 +15,7 @@ var handleSubmit = function() {
             graphUpdate()
         }
     })
+    return false
 }
 
 var graphUpdate = function() {
@@ -33,9 +34,5 @@ var graphUpdate = function() {
 }
 
 $(function() {
-    var submit = document.getElementById('submit')
-    if (submit) {
-        submit.addEventListener('click', handleSubmit)
-    }
     graphUpdate()
 })
