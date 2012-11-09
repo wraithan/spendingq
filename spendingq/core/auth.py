@@ -5,7 +5,7 @@ from tastypie.authorization import Authorization
 
 class ProfileAuthorization(Authorization):
     def is_authorized(self, request, object=None):
-        if request.method == 'POST' and not requst.user.is_authenticated:
+        if request.method == 'POST' and not request.user.is_authenticated:
             return False
         return True
 
