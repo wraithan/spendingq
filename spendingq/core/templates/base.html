@@ -12,19 +12,19 @@
   </head>
   <body>
     <div class="container">
-      <h2><a href="{% url 'home' %}">SpendingQ</a></h2>
       <div class="navbar">
         <div class="navbar-inner">
           <div class="container">
+            <a class="brand" href="{% url 'home' %}">SpendingQ</a>
             <ul class="nav">
-              <li><a href="{% url 'about' %}">About</a></li>
-              {% if user.is_authenticated %}
-              <li><a href="{% url 'profile' %}">Profile</a></li>
-              {% endif %}
-              <li><a href="{% url 'graph_list' %}">Graphs</a></li>
               {% if user.is_authenticated %}
               <li><a href="{% url 'graph' username=user.username %}">My Graph</a></li>
               {% endif %}
+              <li><a href="{% url 'graph_list' %}">Graphs</a></li>
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'profile' %}">Profile</a></li>
+              {% endif %}
+              <li><a href="{% url 'about' %}">About</a></li>
             </ul>
             <ul class="nav pull-right">
               <li>
