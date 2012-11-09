@@ -116,7 +116,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django_browserid',
-    'spendingq.core'
+    'spendingq.core',
+    'gunicorn',
 )
 
 # A sample logging configuration. The only tangible logging
