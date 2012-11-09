@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from tastypie.api import Api
 
-from spendingq.core.views import HomeView, ProfileUpdate
+from spendingq.core.views import HomeView, ProfileUpdate, GraphView
 from spendingq.core.resources import DataPointResource, ProfileResource
 
 
@@ -17,7 +17,7 @@ urlpatterns = patterns(
     url(r'^$',
         HomeView.as_view(),
         name='home'),
-    url(r'^profile/(?P<pk>\d+)/',
+    url(r'^profile/edit$',
         ProfileUpdate.as_view(),
         name='profile'),
     url(r'^admin/',
@@ -26,7 +26,7 @@ urlpatterns = patterns(
         include('django_browserid.urls')),
     url(r'graph/(?P<username>[\w.@+-]+)$',
         GraphView.as_view(),
-        name='graph')
+        name='graph'),
     url(r'^',
         include(api.urls)),
 )

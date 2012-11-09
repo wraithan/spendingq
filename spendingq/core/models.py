@@ -12,7 +12,7 @@ class Profile(models.Model):
     user = models.OneToOneField('auth.User')
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'pk': self.id})
+        return reverse('profile',)
 
 
 class DataPoint(models.Model):

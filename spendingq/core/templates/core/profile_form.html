@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="POST" action="{% url profile pk=user.profile.id %}">
+<form method="POST" action="{% url profile %}">
   {% csrf_token %}
   {{ form }}
   <input type="submit" value="Submit">
