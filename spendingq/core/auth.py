@@ -1,15 +1,13 @@
 from django.db.models import Q
 
-from tastypie.authentication import Authentication
 from tastypie.authorization import Authorization
 
 
-class DjangoAuthentication(Authentication):
-    def is_authenticated(self, request, **kwargs):
-        return request.user.is_authenticated()
-
-    def get_identifier(self, request, **kwargs):
-        return request.user.email
+class ProfileAuthorization(Authorization):
+    def is_authorized(self, request, object=None):
+        if request.method == 'POST' and not requst.user.is_authenticated:
+            return False
+        return True
 
 
 class ProfileAuthorization(Authorization):
