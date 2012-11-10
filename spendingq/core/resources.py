@@ -1,7 +1,7 @@
 from tastypie.authentication import Authentication
 from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
-from tastypie.fields import ToManyField, IntegerField
+from tastypie.fields import ToManyField, DecimalField
 
 from .auth import ProfileAuthorization
 from .models import DataPoint, Profile
@@ -20,7 +20,7 @@ class ProfileResource(ModelResource):
 
 
 class DataPointResource(ModelResource):
-    spending_quotient = IntegerField(attribute='sq', readonly=True)
+    spending_quotient = DecimalField(attribute='sq', readonly=True)
 
     class Meta:
         authentication = Authentication()

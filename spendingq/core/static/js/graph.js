@@ -1,4 +1,4 @@
-var handleSubmit = function() {
+function handleSubmit() {
     var form = $('#inputForm')
     var formData = form.serializeArray()
     var data = {}
@@ -7,10 +7,10 @@ var handleSubmit = function() {
     })
     $.ajax({
         url: form.data('submitUrl'),
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
         success: function(){
             graphUpdate()
         }
@@ -18,7 +18,9 @@ var handleSubmit = function() {
     return false
 }
 
-var graphUpdate = function() {
+var previousPoint = null
+
+function graphUpdate() {
     var graphData = []
     var i = 0
     $.get($('#content').data('profileUrl'), {format: 'json'},
@@ -28,12 +30,51 @@ var graphUpdate = function() {
               }).forEach(function(element) {
                   graphData.push([++i, element.spending_quotient])
               })
-              $.plot($("#graph"), [graphData], {
-                  xaxis: {tickDecimals: false},
-                  yaxis: {min: 0, tickDecimals: false}
+              $.plot($('#graph'), [graphData], {
+                  series: {
+                      lines: {
+                          show: true
+                      },
+                      points: {
+                          show: true
+                      },
+                  },
+                  grid: {
+                      hoverable: true,
+                  },
+                  xaxis: {
+                      tickDecimals: false
+                  },
+                  yaxis: {
+                      min: 0,
+                      tickDecimals: false
+                  },
               })
           }
          )
+    $('#graph').bind('plothover', function(event, pos, item) {
+        if (item) {
+            if (previousPoint != item.dataIndex){
+                previousPoint = item.dataIndex
+                var x = item.datapoint[0].toFixed(2)
+                var y = item.datapoint[1].toFixed(2)
+                $('#tooltip').remove()
+                showTooltip(item.pageX, item.pageY, y)
+            }
+        } else {
+            $('#tooltip').remove()
+            previousPoint = null;
+        }
+    })
+}
+function showTooltip(x, y, contents) {
+    $('<div>').attr({
+        id: 'tooltip'
+    }).addClass('label').text(contents).css({
+        top: y - 25,
+        left: x + 5,
+    }).appendTo('body').fadeIn(100)
+
 }
 
 $(function() {
