@@ -11,4 +11,5 @@ s3 = {
 def deploy():
     local('git push heroku')
     local('./manage.py collectstatic --noinput')
-    local('s3sync.rb -r --progress static/ %(bucket)s:%(key)s' % s3)
+    local('s3sync.rb -r --progress --public-read static/ '
+          '%(bucket)s:%(key)s' % s3)
