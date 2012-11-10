@@ -15,6 +15,8 @@ function handleSubmit() {
             graphUpdate()
         }
     })
+    $('#inputForm :input').val('')
+    $('#firstInput').focus()
     return false
 }
 
