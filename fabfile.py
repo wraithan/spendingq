@@ -1,4 +1,4 @@
-from fabric.api import task, local, lcd
+from fabric.api import task, local
 
 
 s3 = {
