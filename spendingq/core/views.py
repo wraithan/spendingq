@@ -40,8 +40,10 @@ class GraphList(ListView):
     template_name = 'core/graph_list.html'
 
     def get_queryset(self):
-        return Profile.objects.filter(Q(user__id=self.request.user.id) |
-                                      Q(public=True)).select_related('user')
+        return (Profile.objects
+                .filter(Q(user__id=self.request.user.id) | Q(public=True))
+                .select_related('user')
+                .order_by('user__username'))
 
 
 class GraphView(DetailView):
