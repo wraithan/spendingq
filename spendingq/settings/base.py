@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django_browserid',
     'spendingq.core',
     'gunicorn',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
