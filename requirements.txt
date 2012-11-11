@@ -4,3 +4,4 @@ django-browserid==0.6
 django-tastypie==0.9.11
 gunicorn==0.15.0
 psycopg2==2.4.5
+south==0.7.6
