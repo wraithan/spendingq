@@ -5,11 +5,24 @@
 {% if forloop.first %}
 <div class="row">
   <div class="span3 well">
-    <ul class="unstyled">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>User</td>
+          <td>Entries</td>
+          <td>Average SQ</td>
+        </tr>
+      </thead>
+      <tbody>
 {% endif %}
-      <a href="{{ profile.get_graph_url }}"><li>{{ profile.user.username }}</li></a>
+        <tr>
+          <td><a href="{{ profile.get_graph_url }}">{{ profile.user.username }}</a></td>
+          <td>{{ profile.dp_count }}</td>
+          <td>{{ profile.sq_avg|floatformat:"2" }}</td>
+        </tr>
 {% if forloop.last %}
-    </ul>
+      </tbody>
+    </table>
   </div>
 </div>
 {% endif %}

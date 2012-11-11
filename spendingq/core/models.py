@@ -30,12 +30,17 @@ class Profile(models.Model):
 class DataPoint(models.Model):
     collection_rate = models.PositiveIntegerField()
     average_unspent = models.PositiveIntegerField()
+    spending_quotient = models.DecimalField(max_digits=5, decimal_places=2,
+                                            blank=True, null=True)
     owner = models.ForeignKey('core.Profile', related_name='data_points')
 
-    @property
-    def sq(self):
-        cr = self.collection_rate
-        au = self.average_unspent
+    def save(self, *args, **kwargs):
+        self.spending_quotient = self.calc_sq()
+        super(DataPoint, self).save(*args, **kwargs)
+
+    def calc_sq(self):
+        cr = int(self.collection_rate)
+        au = int(self.average_unspent)
         return 35 * ((0.00137 * cr) - log(au)) + 240
 
 

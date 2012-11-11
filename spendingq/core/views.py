@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Avg, Count, Q
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
@@ -36,14 +36,15 @@ class ProfileUpdate(UpdateView):
 
 
 class GraphList(ListView):
-    model = Profile
     template_name = 'core/graph_list.html'
 
     def get_queryset(self):
         return (Profile.objects
                 .filter(Q(user__id=self.request.user.id) | Q(public=True))
                 .select_related('user')
-                .order_by('user__username'))
+                .order_by('user__username')
+                .annotate(dp_count=Count('data_points'),
+                          sq_avg=Avg('data_points__spending_quotient')))
 
 
 class GraphView(DetailView):

@@ -20,7 +20,6 @@ class ProfileResource(ModelResource):
 
 
 class DataPointResource(ModelResource):
-    spending_quotient = DecimalField(attribute='sq', readonly=True)
 
     class Meta:
         authentication = Authentication()
