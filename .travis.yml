@@ -4,4 +4,4 @@ python:
 install:
  - pip install flake8 --use-mirrors
 script:
- - flake8 `find . -iname "*.py" -not -ipath "*settings*"`
+ - flake8 `find . -iname "*.py" -not -ipath "*settings*" -not -ipath "*migration*"`
