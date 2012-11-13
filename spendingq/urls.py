@@ -31,7 +31,7 @@ urlpatterns = patterns(
     url(r'graph/$',
         GraphList.as_view(),
         name='graph_list'),
-    url(r'graph/(?P<username>[\w.@+-]+)$',
+    url(r'graph/(?P<username>[\w\s.@+-]+)$',
         GraphView.as_view(),
         name='graph'),
     url(r'^logout/',
