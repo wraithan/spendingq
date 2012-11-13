@@ -1,7 +1,7 @@
 from tastypie.authentication import Authentication
 from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
-from tastypie.fields import ToManyField, DecimalField
+from tastypie.fields import ToManyField
 
 from .auth import ProfileAuthorization
 from .models import DataPoint, Profile
