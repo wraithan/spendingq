@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
@@ -37,6 +38,12 @@ urlpatterns = patterns(
     url(r'^logout/',
         'django.contrib.auth.views.logout',
         name='logout'),
+    url(r'^favicon\.ico$',
+        'django.views.generic.simple.redirect_to',
+        {'url': settings.STATIC_URL + 'images/favicon.ico',
+         'permanent': False}),
     url(r'^',
         include(api.urls)),
 )
+
+print 'static_url: %s' % settings.STATIC_URL
