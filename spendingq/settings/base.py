@@ -13,7 +13,6 @@ ADMINS = (
 MANAGERS = ADMINS
 
 ROOT_DIR = dirname(dirname(abspath(__file__ + '/../')))
-print ROOT_DIR
 SQLITE_PATH = join(ROOT_DIR, 'dev.db')
 
 DATABASES = {
