@@ -16,6 +16,7 @@ def detail_url(resource, pk):
 class Profile(models.Model):
     public = models.BooleanField(default=False)
     user = models.OneToOneField('auth.User')
+    goal = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse('profile')

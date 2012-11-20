@@ -10,7 +10,11 @@ class ProfileAuthorization(Authorization):
         return True
 
     def apply_limits(self, request, object_list):
-        return object_list.filter(Q(user__id=request.user.id) | Q(public=True))
+        if request.method == 'GET':
+            return object_list.filter(Q(user__id=request.user.id) |
+                                      Q(public=True))
+        else:
+            return object_list.filter(user__id=request.user.id)
 
 
 class DataPointAuthorization(Authorization):
@@ -20,4 +24,8 @@ class DataPointAuthorization(Authorization):
         return True
 
     def apply_limits(self, request, object_list):
-        return object_list.filter(owner__id=request.user.id)
+        if request.method == 'GET':
+            return object_list.filter(Q(owner__id=request.user.id) |
+                                      Q(public=True))
+        else:
+            return object_list.filter(owner__id=request.user.id)

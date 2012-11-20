@@ -11,7 +11,7 @@ class ProfileResource(ModelResource):
                               'data_points', full=True)
 
     class Meta:
-        allowed_methods = ('get',)
+        allowed_methods = ('get', 'post', 'put', 'patch')
         authentication = Authentication()
         authorization = ProfileAuthorization()
         queryset = Profile.objects.all()

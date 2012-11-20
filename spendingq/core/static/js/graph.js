@@ -1,5 +1,5 @@
 function handleNewData() {
-    var form = $('#inputForm')
+    var form = $('#input-form')
     var formData = form.serializeArray()
     var data = {}
     formData.forEach(function(element) {
@@ -15,8 +15,8 @@ function handleNewData() {
             dataPointUpdate()
         }
     })
-    $('#inputForm :input').val('')
-    $('#firstInput').focus()
+    $('#input-form :input').val('')
+    $('#first-input').focus()
     return false
 }
 
@@ -47,12 +47,35 @@ function handleDeleteData() {
     return false
 }
 
+function handleSetGoal() {
+    var goal = $('#goal-form').serializeArray()[0].value
+    if (isNaN(goal) || (!goal && goal !== 0)) {
+        alert('Goal is not a number. To disable your goal set to 0.')
+        return false
+    }
+    $.ajax({
+        url: $('#content').data('profileUrl'),
+        type: 'POST',
+        headers: {'X-HTTP-Method-Override': 'PATCH'},
+        data: JSON.stringify({'goal': goal}),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(){
+            dataPointUpdate()
+        }
+    })
+    return false
+}
+
 function dataPointUpdate() {
     $.get($('#content').data('profileUrl'), {format: 'json'},
           function(data) {
               var dataPoints = data.data_points.sort(function(a, b) {
                   return a.id - b.id
               })
+              graphOptions.grid.markings = [{yaxis: {from: data.goal,
+                                                     to: data.goal}}]
+              $('#goal-form input')[0].value = data.goal
               graphUpdate(dataPoints)
               tableUpdate(dataPoints)
           }

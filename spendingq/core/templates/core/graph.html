@@ -50,15 +50,26 @@
     </div>
     {% if profile.user == user %}
     <div class="well">
-      <form id="inputForm" class="form form-inline" onsubmit="return handleNewData()" >
-        <label>Average Unspent:
-          <input id="firstInput" class="span2" type="text" name="average_unspent">
-        </label>
-        <label>Collection Rate:
-          <input class="span2" type="text" name="collection_rate">
-        </label>
-        <button class="btn" id="submit">Submit</button>
-      </form>
+      <div>
+        <form id="input-form" class="form form-inline" onsubmit="return handleNewData()">
+          <label>Average Unspent:
+            <input id="first-input" class="span2" type="text" name="average_unspent">
+          </label>
+          <label>Collection Rate:
+            <input class="span2" type="text" name="collection_rate">
+          </label>
+          <button class="btn" id="submit">Submit</button>
+        </form>
+      </div>
+      <hr>
+      <div>
+        <form id="goal-form" class="form form-inline" onsubmit="return handleSetGoal()">
+          <label>Goal:
+            <input class="span1" type="text" name="goal">
+          </label>
+          <button class="btn" id="set-goal">Set</button>
+        </form>
+      </div>
     </div>
     {% endif %}
   </div>
