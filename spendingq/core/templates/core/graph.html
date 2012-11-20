@@ -6,18 +6,26 @@
     <script src="{{STATIC_URL}}js/graph.js" type="text/javascript"></script>
     <script src="{{STATIC_URL}}js/jquery.flot.js" type="text/javascript"></script>
     <link rel="stylesheet" href="{{STATIC_URL}}css/graph.css" type="text/css" media="screen" />
+    {% if profile.user != user %}
+    <style type="text/css">
+      .authorized{
+        display: none;
+      }
+    </style>
+    {% endif %}
 {% endblock head%}
 
 {% block content %}
-<div id="content" class="row" data-profile-url="{{profile.get_api_detail_url}}">
+<div id="content" class="row" data-profile-url="{{profile.get_api_detail_url}}"
+     data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}">
   <div id="left" class="span4">
     <div id="left-well" class="well">
-      <form id="delete-form">
+      <form id="delete-form" onsubmit="return handleDeleteData()">
         <div id="table-container">
           <table id="data-table" class="table table-condensed table-striped">
             <thead>
               <tr>
-                <td></td>
+                <td class="authorized"></td>
                 <td>Unspent</td>
                 <td>Rate</td>
                 <td>SQ</td>
@@ -28,7 +36,9 @@
           </table>
         </div>
         <div id="delete-submit">
-          <button id="deleteSubmit" class="btn btn-danger hidden">Delete</button>
+          {% if profile.user == user %}
+          <button id="deleteSubmit" class="btn btn-danger">Delete</button>
+          {% endif %}
         </div>
       </form>
     </div>
@@ -40,7 +50,7 @@
     </div>
     {% if profile.user == user %}
     <div class="well">
-      <form id="inputForm" class="form form-inline" onsubmit="return handleSubmit()" data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}">
+      <form id="inputForm" class="form form-inline" onsubmit="return handleNewData()" >
         <label>Average Unspent:
           <input id="firstInput" class="span2" type="text" name="average_unspent">
         </label>

@@ -3,7 +3,7 @@ from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
 from tastypie.fields import ToManyField
 
-from .auth import ProfileAuthorization
+from .auth import DataPointAuthorization, ProfileAuthorization
 from .models import DataPoint, Profile
 
 
@@ -22,8 +22,9 @@ class ProfileResource(ModelResource):
 class DataPointResource(ModelResource):
 
     class Meta:
+        list_allowed_methods = ('get', 'post', 'put', 'patch')
         authentication = Authentication()
-        authorization = Authorization()
+        authorization = DataPointAuthorization()
         queryset = DataPoint.objects.all()
         resource_name = 'datapoint'
         exclude = ('owner',)

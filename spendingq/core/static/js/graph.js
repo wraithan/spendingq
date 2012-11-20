@@ -1,4 +1,4 @@
-function handleSubmit() {
+function handleNewData() {
     var form = $('#inputForm')
     var formData = form.serializeArray()
     var data = {}
@@ -6,7 +6,7 @@ function handleSubmit() {
         data[element.name] = element.value
     })
     $.ajax({
-        url: form.data('submitUrl'),
+        url: $('#content').data('submitUrl'),
         type: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
@@ -17,6 +17,32 @@ function handleSubmit() {
     })
     $('#inputForm :input').val('')
     $('#firstInput').focus()
+    return false
+}
+
+function handleDeleteData() {
+    var form = $('#delete-form')
+    var formData = form.serializeArray()
+    var uris = []
+    formData.forEach(function(element) {
+        if (element.name == 'toDelete') {
+            uris.push(element.value)
+        }
+    })
+    var msg = ('You are about to delete ' + uris.length +
+               ' point(s), are you sure?')
+    if (confirm(msg)) {
+        $.ajax({
+            url: $('#content').data('submitUrl'),
+            type: 'PATCH',
+            data: JSON.stringify({'objects': [], 'deleted_objects': uris}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(){
+                dataPointUpdate()
+            }
+        })
+    }
     return false
 }
 
@@ -33,14 +59,15 @@ function dataPointUpdate() {
 }
 
 function tableUpdate(dataPoints) {
-    var body = $('#data-table').find('tbody')
+    var body = $('#data-table').find('tbody').text('')
     dataPoints.forEach(function(element) {
         body.append($('<tr>')
                     .append($('<td>')
                             .append($('<input>')
                                     .attr({type: 'checkbox',
-                                           value: element.id})
-                                    .addClass('hidden')))
+                                           value: element.resource_uri,
+                                           name: 'toDelete'}))
+                            .addClass('authorized'))
                     .append($('<td>').text(element.average_unspent))
                     .append($('<td>').text(element.collection_rate))
                     .append($('<td>').text(element.spending_quotient)))
