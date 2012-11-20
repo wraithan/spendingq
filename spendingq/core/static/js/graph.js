@@ -48,7 +48,6 @@ function graphUpdate() {
                       tickDecimals: false
                   },
                   yaxis: {
-                      min: 0,
                       tickDecimals: false
                   },
               })
