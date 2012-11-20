@@ -34,7 +34,8 @@ function handleDeleteData() {
     if (confirm(msg)) {
         $.ajax({
             url: $('#content').data('submitUrl'),
-            type: 'PATCH',
+            type: 'POST',
+            headers: {'X-HTTP-Method-Override': 'PATCH'},
             data: JSON.stringify({'objects': [], 'deleted_objects': uris}),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
