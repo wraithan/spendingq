@@ -5,4 +5,4 @@ gunicorn==0.15.0
 psycopg2==2.4.5
 south==0.7.6
 
-git+https://github.com/toastdriven/django-tastypie.git@63055a7a3c8bf53eac1b879c3bebfd6898416721#egg=django-tastypie
+-e git+https://github.com/toastdriven/django-tastypie.git@63055a7a3c8bf53eac1b879c3bebfd6898416721#egg=django-tastypie
