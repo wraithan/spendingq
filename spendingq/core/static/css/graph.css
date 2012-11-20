@@ -1,8 +1,37 @@
+#table-container {
+  overflow: auto;
+  max-height: 483px;
+}
+
+#left-well {
+  padding: 0px 1px 10px 3px;
+}
+
+#delete-submit {
+  margin: 10px 10px 0px;
+}
+
+#data-table {
+  margin-bottom: 0px;
+}
+
+form {
+  margin-bottom: 0px;
+}
+
 #graph {
   height: 400px;
-  width: 540px;
+  width: 590px;
 }
 
 #tooltip {
   position: absolute;
+}
+
+#data-table thead {
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
 }

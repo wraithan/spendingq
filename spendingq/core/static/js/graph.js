@@ -12,7 +12,7 @@ function handleSubmit() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function(){
-            graphUpdate()
+            dataPointUpdate()
         }
     })
     $('#inputForm :input').val('')
@@ -20,39 +20,67 @@ function handleSubmit() {
     return false
 }
 
-var previousPoint = null
-
-function graphUpdate() {
-    var graphData = []
-    var i = 0
+function dataPointUpdate() {
     $.get($('#content').data('profileUrl'), {format: 'json'},
           function(data) {
-              data.data_points.sort(function(a, b) {
+              var dataPoints = data.data_points.sort(function(a, b) {
                   return a.id - b.id
-              }).forEach(function(element) {
-                  graphData.push([++i, element.spending_quotient])
               })
-              $.plot($('#graph'), [graphData], {
-                  series: {
-                      lines: {
-                          show: true
-                      },
-                      points: {
-                          show: true
-                      },
-                  },
-                  grid: {
-                      hoverable: true,
-                  },
-                  xaxis: {
-                      tickDecimals: false
-                  },
-                  yaxis: {
-                      tickDecimals: false
-                  },
-              })
+              graphUpdate(dataPoints)
+              tableUpdate(dataPoints)
           }
          )
+}
+
+function tableUpdate(dataPoints) {
+    var body = $('#data-table').find('tbody')
+    dataPoints.forEach(function(element) {
+        body.append($('<tr>')
+                    .append($('<td>')
+                            .append($('<input>')
+                                    .attr({type: 'checkbox',
+                                           value: element.id})
+                                    .addClass('hidden')))
+                    .append($('<td>').text(element.average_unspent))
+                    .append($('<td>').text(element.collection_rate))
+                    .append($('<td>').text(element.spending_quotient)))
+    })
+
+}
+
+var graphOptions = {
+    series: {
+        lines: { show: true },
+        points: { show: true }
+    },
+    grid: { hoverable: true },
+    xaxis: { tickDecimals: false },
+    yaxis: { tickDecimals: false }
+}
+
+function graphUpdate(dataPoints) {
+    var graphData = []
+    var i = 0
+    dataPoints.forEach(function(element) {
+        graphData.push([++i, element.spending_quotient])
+    })
+    $.plot($('#graph'), [graphData], graphOptions)
+
+}
+function showTooltip(x, y, contents) {
+    $('<div>').attr({
+        id: 'tooltip'
+    }).addClass('label').text(contents).css({
+        top: y - 25,
+        left: x + 5
+    }).appendTo('body').fadeIn(100)
+
+}
+
+var previousPoint = null
+
+$(function() {
+    dataPointUpdate()
     $('#graph').bind('plothover', function(event, pos, item) {
         if (item) {
             if (previousPoint != item.dataIndex){
@@ -64,20 +92,7 @@ function graphUpdate() {
             }
         } else {
             $('#tooltip').remove()
-            previousPoint = null;
+            previousPoint = null
         }
     })
-}
-function showTooltip(x, y, contents) {
-    $('<div>').attr({
-        id: 'tooltip'
-    }).addClass('label').text(contents).css({
-        top: y - 25,
-        left: x + 5,
-    }).appendTo('body').fadeIn(100)
-
-}
-
-$(function() {
-    graphUpdate()
 })

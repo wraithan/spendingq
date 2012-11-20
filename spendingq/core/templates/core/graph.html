@@ -10,18 +10,47 @@
 
 {% block content %}
 <div id="content" class="row" data-profile-url="{{profile.get_api_detail_url}}">
-  {% if profile.user == user %}
-  <div class="span4 well">
-    <form id="inputForm" onsubmit="return handleSubmit()" data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}">
-      <label>Average Unspent<input id="firstInput" type="text" name="average_unspent"></label>
-      <label>Collection Rate<input type="text" name="collection_rate"></label>
-      <button class="btn" id="submit">Submit</button>
-    </form>
+  <div id="left" class="span4">
+    <div id="left-well" class="well">
+      <form id="delete-form">
+        <div id="table-container">
+          <table id="data-table" class="table table-condensed table-striped">
+            <thead>
+              <tr>
+                <td></td>
+                <td>Unspent</td>
+                <td>Rate</td>
+                <td>SQ</td>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <div id="delete-submit">
+          <button id="deleteSubmit" class="btn btn-danger hidden">Delete</button>
+        </div>
+      </form>
+    </div>
   </div>
-  {% endif %}
   {% if profile.user == user or profile.public %}
-  <div id="graphContainer" class="span7 well">
-    <div id="graph">No data</div>
+  <div id="right" class="span8">
+    <div id="graph-container" class="well">
+      <div id="graph">No data</div>
+    </div>
+    {% if profile.user == user %}
+    <div class="well">
+      <form id="inputForm" class="form form-inline" onsubmit="return handleSubmit()" data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}">
+        <label>Average Unspent:
+          <input id="firstInput" class="span2" type="text" name="average_unspent">
+        </label>
+        <label>Collection Rate:
+          <input class="span2" type="text" name="collection_rate">
+        </label>
+        <button class="btn" id="submit">Submit</button>
+      </form>
+    </div>
+    {% endif %}
   </div>
   {% else %}
   <div class="span12 well"><h3>{{ profile.user.username }}'s profile is not public.</h3></div>
