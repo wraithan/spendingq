@@ -110,13 +110,33 @@ var graphOptions = {
 }
 
 function graphUpdate(dataPoints) {
-    var graphData = []
+    var actualData = []
+    var averageData = []
     var i = 0
-    dataPoints.forEach(function(element) {
-        graphData.push([++i, element.spending_quotient])
-    })
-    $.plot($('#graph'), [graphData], graphOptions)
+    var avgCount = 0
+    var currentTotal = 0
+    var oldestNumber = 0
+    dataPoints.forEach(function(element, index) {
+        var sq = parseInt(element.spending_quotient)
+        actualData.push([index, sq])
 
+        currentTotal += sq
+        if (avgCount===10) {
+            currentTotal -= oldestNumber
+            oldestNumber = sq
+        } else {
+            if (avgCount===0) {
+                oldestNumber = sq
+            }
+            avgCount++
+        }
+        averageData.push([index, currentTotal/avgCount])
+    })
+    $.plot($('#graph'),
+           [{data: actualData, label: 'SQ'},
+            {data: averageData, label: 'Avg SQ'}],
+           graphOptions)
+    $('#graph > div.legend > table').removeAttr('style')
 }
 function showTooltip(x, y, contents) {
     $('<div>').attr({
@@ -136,10 +156,10 @@ $(function() {
         if (item) {
             if (previousPoint != item.dataIndex){
                 previousPoint = item.dataIndex
-                var x = item.datapoint[0].toFixed(2)
                 var y = item.datapoint[1].toFixed(2)
                 $('#tooltip').remove()
-                showTooltip(item.pageX, item.pageY, y)
+                showTooltip(item.pageX, item.pageY,
+                            item.series.label + ': ' + y)
             }
         } else {
             $('#tooltip').remove()

@@ -35,10 +35,8 @@
             </tbody>
           </table>
         </div>
-        <div id="delete-submit">
-          {% if profile.user == user %}
+        <div id="delete-submit" class="authorized">
           <button id="deleteSubmit" class="btn btn-danger">Delete</button>
-          {% endif %}
         </div>
       </form>
     </div>
@@ -48,8 +46,7 @@
     <div id="graph-container" class="well">
       <div id="graph">No data</div>
     </div>
-    {% if profile.user == user %}
-    <div class="well">
+    <div class="well authorized">
       <div>
         <form id="input-form" class="form form-inline" onsubmit="return handleNewData()">
           <label>Average Unspent:
@@ -71,7 +68,6 @@
         </form>
       </div>
     </div>
-    {% endif %}
   </div>
   {% else %}
   <div class="span12 well"><h3>{{ profile.user.username }}'s profile is not public.</h3></div>

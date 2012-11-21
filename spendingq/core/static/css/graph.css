@@ -35,3 +35,19 @@ form {
 .hidden {
   display: none;
 }
+
+#graph > div.legend > table {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3)
+  font-weight: bold;
+  line-height: 14px;
+  vertical-align: baseline;
+  white-space: nowrap;
+  background-color: rgb(117, 124, 130);
+  padding: 1px 4px 2px;
+  border-radius: 3px 3px 3px 3px;
+}
