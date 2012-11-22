@@ -13,6 +13,7 @@ def deploy():
     local('heroku run ./manage.py migrate')
     media()
 
+
 @task
 def media():
     local('./manage.py collectstatic --noinput')
