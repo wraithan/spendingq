@@ -117,11 +117,11 @@ function graphUpdate(dataPoints) {
     var currentTotal = 0
     var oldestNumber = 0
     dataPoints.forEach(function(element, index) {
-        var sq = parseInt(element.spending_quotient)
+        var sq = parseFloat(element.spending_quotient)
         actualData.push([index, sq])
 
         currentTotal += sq
-        if (avgCount===10) {
+        if (avgCount===4) {
             currentTotal -= oldestNumber
             oldestNumber = sq
         } else {
@@ -133,8 +133,10 @@ function graphUpdate(dataPoints) {
         averageData.push([index, currentTotal/avgCount])
     })
     $.plot($('#graph'),
-           [{data: actualData, label: 'SQ'},
-            {data: averageData, label: 'Avg SQ'}],
+           [
+               {data: actualData, label: 'SQ'},
+               // {data: averageData, label: 'Avg SQ'},
+           ],
            graphOptions)
     $('#graph > div.legend > table').removeAttr('style')
 }
