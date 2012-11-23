@@ -121,7 +121,7 @@ function graphUpdate(dataPoints) {
         actualData.push([index, sq])
 
         currentTotal += sq
-        if (avgCount===4) {
+        if (avgCount===10) {
             currentTotal -= oldestNumber
             oldestNumber = sq
         } else {
