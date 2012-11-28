@@ -19,7 +19,7 @@
           <td><a href="{{ profile.get_graph_url }}">{{ profile.user.username }}</a></td>
           <td>{{ profile.dp_count }}</td>
           <td>
-            {% if dp.count > 9 %}
+            {% if profile.dp_count > 9 %}
             {{ profile.sq_avg|floatformat:"2" }}
             {% endif %}
           </td>
