@@ -29,6 +29,6 @@ class DataPointResource(ModelResource):
         exclude = ('owner',)
 
     def obj_create(self, bundle, request=None, **kwargs):
-        user_id = request.user.id
+        user_id = request.user.profile.id
         return super(DataPointResource, self).obj_create(bundle, request,
                                                          owner_id=user_id)
