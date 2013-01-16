@@ -25,7 +25,7 @@ class DataPointAuthorization(Authorization):
 
     def apply_limits(self, request, object_list):
         if request.method == 'GET':
-            return object_list.filter(Q(owner__id=request.user.id) |
+            return object_list.filter(Q(owner__id=request.user.profile.id) |
                                       Q(public=True))
         else:
-            return object_list.filter(owner__id=request.user.id)
+            return object_list.filter(owner__id=request.user.profile.id)
