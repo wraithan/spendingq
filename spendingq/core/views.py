@@ -1,4 +1,5 @@
 from django.db.models import Avg, Count, Q
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
@@ -57,5 +58,5 @@ class GraphView(DetailView):
     template_name = 'core/graph.html'
 
     def get_object(self, queryset=None):
-        return (Profile.objects.select_related('user')
-                               .get(user__username=self.kwargs['username']))
+        return get_object_or_404(Profile.objects.select_related('user'),
+                                 user__username=self.kwargs['username'])
