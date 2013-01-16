@@ -5,7 +5,7 @@ from django.contrib import admin
 from tastypie.api import Api
 
 from spendingq.core.views import (AboutView, GraphList, GraphView, HomeView,
-                                  ProfileUpdate)
+                                  ProfileUpdate, RobotsView)
 from spendingq.core.resources import DataPointResource, ProfileResource
 
 
@@ -19,6 +19,9 @@ urlpatterns = patterns(
     url(r'^$',
         HomeView.as_view(),
         name='home'),
+    url(r'^robots.txt$',
+        RobotsView.as_view(),
+        name='robots.txt'),
     url(r'^about/$',
         AboutView.as_view(),
         name='about'),

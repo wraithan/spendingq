@@ -12,6 +12,10 @@ class HomeView(TemplateView):
     template_name = 'core/home.html'
 
 
+class RobotsView(TemplateView):
+    template_name = 'robots.txt'
+
+
 class AboutView(TemplateView):
     template_name = 'core/about.html'
 
