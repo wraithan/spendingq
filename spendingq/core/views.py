@@ -49,8 +49,7 @@ class GraphList(ListView):
                 .select_related('user')
                 .annotate(dp_count=Count('data_points'),
                           sq_avg=Avg('data_points__spending_quotient'))
-                .order_by('-dp_count')
-)
+                .order_by('-dp_count'))
 
 
 class GraphView(DetailView):
