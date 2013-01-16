@@ -139,12 +139,15 @@ function graphUpdate(dataPoints, goal) {
     })
     graphOptions.yaxis.min = (min - 5)
     graphOptions.yaxis.max = (max + 5)
-    $.plot($('#graph'),
-           [
-               {data: actualData, label: 'SQ'},
-               // {data: averageData, label: 'Avg SQ'},
-           ],
-           graphOptions)
+    var graphData = []
+    if ($('#sq-line').attr('checked')) {
+        graphData.push({data: actualData, label: 'SQ', color: 0})
+    }
+    if ($('#avg-line').attr('checked')) {
+        graphData.push({data: averageData, label: 'Avg SQ', color: 1})
+    }
+
+    $.plot($('#graph'), graphData, graphOptions)
     $('#graph > div.legend > table').removeAttr('style')
 }
 function showTooltip(x, y, contents) {

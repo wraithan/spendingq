@@ -44,7 +44,17 @@
   {% if profile.user == user or profile.public %}
   <div id="right" class="span8">
     <div id="graph-container" class="well">
-      <h3>{{profile.user.username}}'s Graph</h3>
+      <div id="graph-header">
+        <h3>{{profile.user.username}}'s Graph</h3>
+        <div id="line-toggle">
+          <label class="checkbox" onclick="dataPointUpdate()">
+            <input id="sq-line" type="checkbox" checked>SQ
+          </label>
+          <label class="checkbox" onclick="dataPointUpdate()">
+            <input id="avg-line" type="checkbox" checked>Avg SQ
+          </label>
+        </div>
+      </div>
       <div id="graph">No data</div>
     </div>
     <div class="well authorized">

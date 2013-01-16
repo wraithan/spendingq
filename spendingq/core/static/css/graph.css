@@ -36,6 +36,15 @@ form {
   display: none;
 }
 
+#graph-header h3 {
+  display: inline-block;
+}
+
+#line-toggle {
+  display: inline-block;
+  float: right;
+}
+
 #graph > div.legend > table {
   position: absolute;
   top: 9px;
