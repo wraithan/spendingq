@@ -114,25 +114,23 @@ function graphUpdate(dataPoints, goal) {
     var averageData = []
     var i = 0
     var avgCount = 0
-    var currentTotal = 0
-    var oldestNumber = 0
+    var avgSet = []
+    var avgTotal = 0
     var min = goal
     var max = goal
     dataPoints.forEach(function(element, index) {
         var sq = parseFloat(element.spending_quotient)
         actualData.push([index, sq])
 
-        currentTotal += sq
-        if (avgCount===10) {
-            currentTotal -= oldestNumber
-            oldestNumber = sq
-        } else {
-            if (avgCount===0) {
-                oldestNumber = sq
-            }
-            avgCount++
+        if (avgCount===10){
+            avgSet.shift()
         }
-        averageData.push([index, currentTotal/avgCount])
+        avgCount = avgSet.push(sq)
+        avgSet.forEach(function(point) {
+            avgTotal += point
+        })
+        averageData.push([index, avgTotal/avgCount])
+        avgTotal = 0
         if (min > sq) {
             min = sq
         } else if (max < sq) {
