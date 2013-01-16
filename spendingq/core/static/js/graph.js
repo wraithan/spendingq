@@ -76,7 +76,7 @@ function dataPointUpdate() {
               graphOptions.grid.markings = [{yaxis: {from: data.goal,
                                                      to: data.goal}}]
               $('#goal-form input')[0].value = data.goal
-              graphUpdate(dataPoints)
+              graphUpdate(dataPoints, data.goal)
               tableUpdate(dataPoints)
           }
          )
@@ -109,13 +109,15 @@ var graphOptions = {
     yaxis: { tickDecimals: false }
 }
 
-function graphUpdate(dataPoints) {
+function graphUpdate(dataPoints, goal) {
     var actualData = []
     var averageData = []
     var i = 0
     var avgCount = 0
     var currentTotal = 0
     var oldestNumber = 0
+    var min = goal
+    var max = goal
     dataPoints.forEach(function(element, index) {
         var sq = parseFloat(element.spending_quotient)
         actualData.push([index, sq])
@@ -131,7 +133,14 @@ function graphUpdate(dataPoints) {
             avgCount++
         }
         averageData.push([index, currentTotal/avgCount])
+        if (min > sq) {
+            min = sq
+        } else if (max < sq) {
+            max = sq
+        }
     })
+    graphOptions.yaxis.min = (min - 5)
+    graphOptions.yaxis.max = (max + 5)
     $.plot($('#graph'),
            [
                {data: actualData, label: 'SQ'},
