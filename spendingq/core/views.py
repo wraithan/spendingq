@@ -47,9 +47,10 @@ class GraphList(ListView):
         return (Profile.objects
                 .filter(Q(user__id=self.request.user.id) | Q(public=True))
                 .select_related('user')
-                .order_by('user__username')
                 .annotate(dp_count=Count('data_points'),
-                          sq_avg=Avg('data_points__spending_quotient')))
+                          sq_avg=Avg('data_points__spending_quotient'))
+                .order_by('-dp_count')
+)
 
 
 class GraphView(DetailView):
