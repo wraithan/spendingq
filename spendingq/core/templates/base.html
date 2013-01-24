@@ -25,6 +25,7 @@
               {% if user.is_authenticated %}
               <li><a href="{% url 'profile' %}">Profile</a></li>
               {% endif %}
+              <li><a href="{% url 'stats' %}">Stats</a></li>
               <li><a href="{% url 'about' %}">About</a></li>
             </ul>
             <ul class="nav pull-right">

@@ -80,7 +80,6 @@ class AllTimePoints(TemplateView):
                     .values('when')
                     .annotate(count=Count('id'))
                     .order_by('when'))
-        # data.insert(0, {'when': datetime(2013, 1, 23), 'count': 0})
         content = (DateTimeJSONEncoder().encode(data))
         return http.HttpResponse(content, content_type='application/json')
 
