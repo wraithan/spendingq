@@ -1,3 +1,7 @@
+from datetime import date, datetime
+import json
+
+from django import http
 from django.db.models import Avg, Count, Q
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
@@ -5,7 +9,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 
-from .models import Profile
+from .models import DataPoint, Profile
 from .forms import ProfileForm
 
 
@@ -60,3 +64,26 @@ class GraphView(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Profile.objects.select_related('user'),
                                  user__username=self.kwargs['username'])
+
+
+class DateTimeJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        else:
+            return super(DateTimeJSONEncoder, self).default(obj)
+
+
+class AllTimePoints(TemplateView):
+    def render_to_response(self, context):
+        data = list(DataPoint.objects
+                    .values('when')
+                    .annotate(count=Count('id'))
+                    .order_by('when'))
+        # data.insert(0, {'when': datetime(2013, 1, 23), 'count': 0})
+        content = (DateTimeJSONEncoder().encode(data))
+        return http.HttpResponse(content, content_type='application/json')
+
+
+class StatsView(TemplateView):
+    template_name = 'core/stats.html'

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/stats.css">
+{% endblock head %}
+
+{% block content %}
+<h4>Number of Games</h4>
+<div id="statGraph"></div>
+{% endblock content %}
+
+{% block js %}
+<script src="http://d3js.org/d3.v3.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/d3.line.js"></script>
+{% endblock js %}

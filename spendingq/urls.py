@@ -4,8 +4,9 @@ from django.contrib import admin
 
 from tastypie.api import Api
 
-from spendingq.core.views import (AboutView, GraphList, GraphView, HomeView,
-                                  ProfileUpdate, RobotsView)
+from spendingq.core.views import (AboutView, AllTimePoints, GraphList,
+                                  GraphView, HomeView, ProfileUpdate,
+                                  RobotsView, StatsView)
 from spendingq.core.resources import DataPointResource, ProfileResource
 
 
@@ -45,6 +46,12 @@ urlpatterns = patterns(
         'django.views.generic.simple.redirect_to',
         {'url': settings.STATIC_URL + 'images/favicon.ico',
          'permanent': False}),
+    url(r'stats/$',
+        StatsView.as_view(),
+        name='stats'),
+    url(r'^stats/data.json$',
+        AllTimePoints.as_view(),
+        name='stats-data'),
     url(r'^',
         include(api.urls)),
 )

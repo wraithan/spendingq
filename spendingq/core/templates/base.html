@@ -51,6 +51,8 @@
         <div><a href="{% url 'home' %}">SpendingQ</a> is an <a href="https://github.com/wraithan/spendingq/">open source</a> project by <a href="http://wraithan.net/">Wraithan</a>. You can report issues and request features on <a href="https://github.com/wraithan/spendingq/issues">github</a></div>
       </footer>
     </div>
+    {% block js %}
+    {% endblock js %}
     <script type="text/javascript">
       var _gauges = _gauges || [];
       (function() {
@@ -65,4 +67,4 @@
       })();
     </script>
   </body>
-<html>
+</html>
