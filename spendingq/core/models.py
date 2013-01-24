@@ -1,3 +1,4 @@
+from datetime import datetime
 from math import log
 
 from django.contrib.auth.models import User
@@ -34,6 +35,7 @@ class DataPoint(models.Model):
     spending_quotient = models.DecimalField(max_digits=5, decimal_places=2,
                                             blank=True, null=True)
     owner = models.ForeignKey('core.Profile', related_name='data_points')
+    when = models.DateTimeField(default=datetime.now)
 
     def save(self, *args, **kwargs):
         self.spending_quotient = self.calc_sq()
