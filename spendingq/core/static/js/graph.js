@@ -67,17 +67,23 @@ function handleSetGoal() {
     return false
 }
 
-function dataPointUpdate() {
+
+function profileUpdate(){
     $.get($('#content').data('profileUrl'), {format: 'json'},
           function(data) {
-              var dataPoints = data.data_points.sort(function(a, b) {
-                  return a.id - b.id
-              })
               graphOptions.grid.markings = [{yaxis: {from: data.goal,
                                                      to: data.goal}}]
               $('#goal-form input')[0].value = data.goal
-              graphUpdate(dataPoints, data.goal)
-              tableUpdate(dataPoints)
+          }
+         )
+}
+
+function dataPointUpdate() {
+    profileUpdate()
+    $.get($('#content').data('dataUrl'),
+          function(data) {
+              graphUpdate(data, $('#goal-form input')[0].value)
+              tableUpdate(data)
           }
          )
 }
@@ -89,7 +95,7 @@ function tableUpdate(dataPoints) {
                     .append($('<td>')
                             .append($('<input>')
                                     .attr({type: 'checkbox',
-                                           value: element.resource_uri,
+                                           value: '/api/datapoint/' + element.id + '/',
                                            name: 'toDelete'}))
                             .addClass('authorized'))
                     .append($('<td>').text(element.average_unspent))
@@ -147,6 +153,7 @@ function graphUpdate(dataPoints, goal) {
     $.plot($('#graph'), graphData, graphOptions)
     $('#graph > div.legend > table').removeAttr('style')
 }
+
 function showTooltip(x, y, contents) {
     $('<div>').attr({
         id: 'tooltip'

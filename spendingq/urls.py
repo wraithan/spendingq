@@ -6,7 +6,7 @@ from tastypie.api import Api
 
 from spendingq.core.views import (AboutView, AllTimePoints, GraphList,
                                   GraphView, HomeView, ProfileUpdate,
-                                  RobotsView, StatsView)
+                                  RobotsView, StatsView, DataPoints)
 from spendingq.core.resources import DataPointResource, ProfileResource
 
 
@@ -52,6 +52,9 @@ urlpatterns = patterns(
     url(r'^stats/data.json$',
         AllTimePoints.as_view(),
         name='stats-data'),
+    url(r'^stats/(?P<username>[\w\s.@+-]+)/data.json$',
+        DataPoints.as_view(),
+        name='stats-user-data'),
     url(r'^',
         include(api.urls)),
 )

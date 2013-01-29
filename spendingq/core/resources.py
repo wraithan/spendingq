@@ -7,8 +7,6 @@ from .models import DataPoint, Profile
 
 
 class ProfileResource(ModelResource):
-    data_points = ToManyField('spendingq.core.resources.DataPointResource',
-                              'data_points', full=True)
 
     class Meta:
         allowed_methods = ('get', 'post', 'put', 'patch')

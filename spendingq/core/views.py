@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import decimal
 import json
 
 from django import http
@@ -70,6 +71,8 @@ class DateTimeJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
             return obj.isoformat()
+        elif isinstance(obj, decimal.Decimal):
+            return float(obj)
         else:
             return super(DateTimeJSONEncoder, self).default(obj)
 
@@ -81,6 +84,17 @@ class AllTimePoints(TemplateView):
                     .annotate(count=Count('id'))
                     .order_by('when'))
         content = (DateTimeJSONEncoder().encode(data))
+        return http.HttpResponse(content, content_type='application/json')
+
+
+class DataPoints(TemplateView):
+    def render_to_response(self, context):
+        user = self.kwargs.get('username')
+        query_filter = Q(owner__user__username=user)
+        if self.request.user.username != user:
+            query_filter &= Q(owner__public=True)
+        data = DataPoint.objects.filter(query_filter).values().order_by('id')
+        content = (DateTimeJSONEncoder().encode(list(data)))
         return http.HttpResponse(content, content_type='application/json')
 
 
