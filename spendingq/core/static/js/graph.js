@@ -126,7 +126,7 @@ var graphOptions = {
 }
 
 function graphUpdate(dataPoints, goal) {
-    graphOptions.grid.markings = [{yaxis: {from: data.goal, to: data.goal}}]
+    graphOptions.grid.markings = [{yaxis: {from: goal, to: goal}}]
     var actualData = []
     var averageData = []
     var i = 0
