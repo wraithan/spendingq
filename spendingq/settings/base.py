@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'spendingq.core',
     'gunicorn',
     'south',
+    'eadred',
 )
 
 # A sample logging configuration. The only tangible logging

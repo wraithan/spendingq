@@ -1,6 +1,7 @@
 Django==1.4.2
 dj-database-url==0.2.1
 django-browserid==0.6
+eadred==0.1
 gunicorn==0.15.0
 newrelic==1.8.0.13
 psycopg2==2.4.5
