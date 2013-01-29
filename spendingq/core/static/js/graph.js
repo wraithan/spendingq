@@ -71,8 +71,6 @@ function handleSetGoal() {
 function profileUpdate(){
     $.get($('#content').data('profileUrl'), {format: 'json'},
           function(data) {
-              graphOptions.grid.markings = [{yaxis: {from: data.goal,
-                                                     to: data.goal}}]
               $('#goal-form input')[0].value = data.goal
           }
          )
@@ -128,6 +126,7 @@ var graphOptions = {
 }
 
 function graphUpdate(dataPoints, goal) {
+    graphOptions.grid.markings = [{yaxis: {from: data.goal, to: data.goal}}]
     var actualData = []
     var averageData = []
     var i = 0
