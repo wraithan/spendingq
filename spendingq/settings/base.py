@@ -13,9 +13,10 @@ ADMINS = (
 MANAGERS = ADMINS
 
 ROOT_DIR = dirname(dirname(abspath(__file__ + '/../')))
+SQLITE_PATH = join(ROOT_DIR, 'dev.db')
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://localhost/spendingq')
+    'default': dj_database_url.config(default='sqlite:///' + SQLITE_PATH)
 }
 
 # Local time zone for this installation. Choices can be found here:
@@ -153,7 +154,7 @@ AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
 )
 
-SITE_URL = 'http://localhost:10000'
+SITE_URL = 'http://localhost:8080'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -167,4 +168,3 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 LOGIN_REDIRECT_URL_FAILURE = LOGIN_REDIRECT_URL = '/'
-TASTYPIE_FULL_DEBUG = True
