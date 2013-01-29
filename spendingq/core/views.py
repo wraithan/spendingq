@@ -62,6 +62,18 @@ class GraphView(DetailView):
     model = Profile
     template_name = 'core/graph.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(GraphView, self).get_context_data(**kwargs)
+
+        username = self.kwargs['username']
+        public = self.request.user.username != username
+
+        context.update({
+            'initial_data': DataPoints.get_json(username, public)
+        })
+
+        return context
+
     def get_object(self, queryset=None):
         return get_object_or_404(Profile.objects.select_related('user'),
                                  user__username=self.kwargs['username'])
@@ -88,13 +100,19 @@ class AllTimePoints(TemplateView):
 
 
 class DataPoints(TemplateView):
-    def render_to_response(self, context):
-        user = self.kwargs.get('username')
-        query_filter = Q(owner__user__username=user)
-        if self.request.user.username != user:
+
+    @classmethod
+    def get_json(cls, user_name, public_only):
+        query_filter = Q(owner__user__username=user_name)
+        if public_only:
             query_filter &= Q(owner__public=True)
         data = DataPoint.objects.filter(query_filter).values().order_by('id')
         content = (DateTimeJSONEncoder().encode(list(data)))
+        return content
+
+    def render_to_response(self, context):
+        user = self.kwargs.get('username')
+        content = self.get_json(user, self.request.user.username != user)
         return http.HttpResponse(content, content_type='application/json')
 
 

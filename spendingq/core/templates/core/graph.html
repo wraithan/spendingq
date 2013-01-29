@@ -18,7 +18,8 @@
 {% block content %}
 <div id="content" class="row" data-profile-url="{{profile.get_api_detail_url}}"
      data-submit-url="{% url 'api_dispatch_list' api_name='api' resource_name='datapoint' %}"
-     data-data-url="{% url 'stats-user-data' profile.user.username %}">
+     data-data-url="{% url 'stats-user-data' profile.user.username %}"
+     data-initial-data="{{ initial_data }}">
   <div id="left" class="span4">
     <div id="left-well" class="well">
       <form id="delete-form" onsubmit="return handleDeleteData()">

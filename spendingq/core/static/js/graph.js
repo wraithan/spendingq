@@ -88,6 +88,18 @@ function dataPointUpdate() {
          )
 }
 
+function initialGraph() {
+    var data = $('#content').data('initial-data')
+    if (data) {
+        console.log('using initial data')
+        graphUpdate(data, $('#goal-form input')[0].value)
+        tableUpdate(data)
+    } else {
+        console.log('No initial data found, making an ajax request.')
+        dataPointUpdate()
+    }
+}
+
 function tableUpdate(dataPoints) {
     var body = $('#data-table').find('tbody').text('')
     dataPoints.forEach(function(element) {
@@ -167,7 +179,7 @@ function showTooltip(x, y, contents) {
 var previousPoint = null
 
 $(function() {
-    dataPointUpdate()
+    initialGraph()
     $('#graph').bind('plothover', function(event, pos, item) {
         if (item) {
             if (previousPoint != item.dataIndex){
