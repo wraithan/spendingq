@@ -12,7 +12,8 @@ def generate_sampledata(options):
     if point_count is None:
         print 'points requires'
         fail = True
-
+    if fail:
+        raise TypeError('fix arguments')
     prof = Profile.objects.get(user__id=user_id)
     for i in xrange(point_count):
         prof.data_points.create(collection_rate=randint(700, 1200),
