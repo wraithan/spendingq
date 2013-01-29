@@ -123,14 +123,11 @@ function graphUpdate(dataPoints, goal) {
         actualData.push([index, sq])
 
         if (avgCount===10){
-            avgSet.shift()
+            avgTotal -= avgSet.shift()
         }
         avgCount = avgSet.push(sq)
-        avgSet.forEach(function(point) {
-            avgTotal += point
-        })
+        avgTotal += sq
         averageData.push([index, avgTotal/avgCount])
-        avgTotal = 0
         if (min > sq) {
             min = sq
         } else if (max < sq) {
